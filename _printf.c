@@ -55,8 +55,6 @@ write(1, format++, 1);
 as++;
 }
 }
-
 va_end(g);
 return (as);
 }
-

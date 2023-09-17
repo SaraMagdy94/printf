@@ -36,7 +36,6 @@ as++;
 format++;
 }
 }
-
 va_end(g);
 return (as);
 }
