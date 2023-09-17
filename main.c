@@ -43,6 +43,7 @@ int main(void)
     return (0);
 }
 
+<<<<<<< HEAD
 /**
  * main - Entry point
  *
@@ -53,3 +54,5 @@ int main(void)
     _printf("%b\n", 98);
     return (0);
 }
+=======
+>>>>>>> c147f9b243724301894ce4a0984e506589ee072d

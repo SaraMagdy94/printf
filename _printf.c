@@ -1,6 +1,8 @@
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include "main.h"
+
 /**
  * _printf - printf function
  * @format: Format string
@@ -11,7 +13,6 @@ int _printf(const char *format, ...)
 {
 int as = 0;
 va_list g;
-
 va_start(g, format);
 
 while (*format)
@@ -67,3 +68,4 @@ as++;
 va_end(g);
 return (as);
 }
+
