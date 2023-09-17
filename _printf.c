@@ -1,7 +1,5 @@
 #include <unistd.h>
 #include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
 #include "main.h"
 /**
  * _printf - printf function
@@ -11,70 +9,54 @@
  */
 int _printf(const char *format, ...)
 {
-int chars_printed = 0;
-char buffer[12];
-va_list args;
-va_start(args, format);
+int as = 0;
+va_list g;
+
+va_start(g, format);
 
 while (*format)
 {
-if (*format == '%' && *(format + 1))
+if (*format == '%' && (*(format + 1) == 'c' || *(format + 1) == 's'))
 {
-format++;
-if (*format == 'c')
+if (*(format + 1) == 'c')
 {
-char c = va_arg(args, int);
-chars_printed += write(1, &c, 1);
-}
-else if (*format == 's')
-{
-char *str = va_arg(args, char *);
-if (str)
-{
-chars_printed += write(1, str, strlen(str));
+char x = va_arg(g, int);
+write(1, &x, 1);
+as++;
 }
 else
 {
-chars_printed += write(1, "(null)", 6);
-}
-}
-else if (*format == 'd' || *format == 'i')
+char *sr = va_arg(g, char *);
+if (sr)
 {
-int len = sprintf(buffer, "%d", va_arg(args, int));
-chars_printed += write(1, buffer, len);
-}
-else if (*format == 'u')
+while (*sr)
 {
-int len = sprintf(buffer, "%u", va_arg(args, unsigned int));
-chars_printed += write(1, buffer, len);
-}
-else if (*format == 'o')
-{
-int len = sprintf(buffer, "%o", va_arg(args, unsigned int));
-chars_printed += write(1, buffer, len);
-}
-else if (*format == 'x' || *format == 'X')
-{
-int len = sprintf(buffer, (*format == 'x') ? "%x" : "%X", va_arg(args, unsigned int));
-chars_printed += write(1, buffer, len);
-}
-else if (*format == 'p')
-{
-int len = sprintf(buffer, "%p", va_arg(args, void *));
-chars_printed += write(1, buffer, len);
-}
-else if (*format == '%')
-{
-chars_printed += write(1, "%", 1);
+write(1, sr++, 1);
+as++;
 }
 }
 else
 {
-chars_printed += write(1, format, 1);
+write(1, "(null)", 6);
+as = as + 6;
 }
-format++;
+}
+format = format + 2;
+}
+else if (*format == '%' && (*(format + 1) == '%' || *(format + 1) == '\0'))
+{
+write(1, "%", 1);
+as++;
+format = format + 2;
+}
+else
+{
+write(1, format++, 1);
+as++;
+}
 }
 
-va_end(args);
-return (chars_printed);
+va_end(g);
+return (as);
 }
+
