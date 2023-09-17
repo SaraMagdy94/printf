@@ -42,17 +42,3 @@ int main(void)
     printf("Unknown:[%r]\n");
     return (0);
 }
-
-<<<<<<< HEAD
-/**
- * main - Entry point
- *
- * Return: Always 0
- */
-int main(void)
-{
-    _printf("%b\n", 98);
-    return (0);
-}
-=======
->>>>>>> c147f9b243724301894ce4a0984e506589ee072d
