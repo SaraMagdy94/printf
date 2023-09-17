@@ -1,22 +1,14 @@
-#include <stdarg.h>
 #include <unistd.h>
-#include "main.h"
+#include <stdarg.h>
 #include <stdio.h>
+#include "main.h"
+
 /**
  * _printf - printf function
  * @format: Format string
  * @...: Variable arguments
- * _strlen - Calculate the length of a string.
- * @str: The input string.
  * Return: Number of characters printed
  */
-size_t _strlen(const char *str)
-{
-size_t l = 0;
-while (str[l])
-l++;
-return (l);
-}
 int _printf(const char *format, ...)
 {
 int as = 0;
@@ -25,45 +17,55 @@ va_start(g, format);
 
 while (*format)
 {
-if (*format == '%' && *(format + 1))
+if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 {
-format++;
-switch (*format)
-{
-case 'c':
-{
-char c = va_arg(g, int);
-as = as + write(1, &c, 1);
-break;
-}
-case 's':
-{
-const char *str = va_arg(g, const char *);
-as = as + write(1, str, _strlen(str));
-break;
-}
-case 'd':
-case 'i':
-{
+int r = va_arg(g, int);
 char buffer[12];
-int x = snprintf(buffer, sizeof(buffer), "%d", va_arg(g, int));
-as = as + write(1, buffer, x);
-break;
+int i = sprintf(buffer, "%d", r);
+write(1, buffer, i);
+as = as + i;
+format = format + 2;
 }
-case '%':
-as = as + write(1, "%", 1);
-break;
-default:
-as = as + write(1, "%", 1);
-as = as + write(1, format, 1);
+else if (*format == '%' && (*(format + 1) == 'c' || *(format + 1) == 's'))
+{
+if (*(format + 1) == 'c')
+{
+char x = va_arg(g, int);
+write(1, &x, 1);
+as++;
+}
+else
+{
+char *sr = va_arg(g, char *);
+if (sr)
+{
+while (*sr)
+{
+write(1, sr++, 1);
+as++;
 }
 }
 else
-as = as + write(1, format, 1);
-format++;
+{
+write(1, "(null)", 6);
+as = as + 6;
+}
+}
+format = format + 2;
+}
+else if (*format == '%' && (*(format + 1) == '%' || *(format + 1) == '\0'))
+{
+write(1, "%", 1);
+as++;
+format = format + 2;
+}
+else
+{
+write(1, format++, 1);
+as++;
+}
 }
 va_end(g);
 return (as);
 }
-
 
