@@ -2,12 +2,12 @@
 #include <unistd.h>
 #include "main.h"
 /**
- * _printf - printf function
+ * mprintf - printf function
  * @format: Format string
  * @...: Variable arguments
  * Return: Number of characters printed
  */
-int _printf(const char *format, ...)
+int mprintf(const char *format, ...)
 {
 int as = 0;
 va_list g;
