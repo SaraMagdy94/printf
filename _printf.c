@@ -42,6 +42,14 @@ const char *str = va_arg(g, const char *);
 as = as + write(1, str, _strlen(str));
 break;
 }
+case 'd':
+case 'i':
+{
+char buffer[12];
+int x = snprintf(buffer, sizeof(buffer), "%d", va_arg(g, int));
+as = as + write(1, buffer, x);
+break;
+}
 case '%':
 as = as + write(1, "%", 1);
 break;
