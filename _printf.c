@@ -17,7 +17,7 @@ va_start(g, format);
 
 while (*format)
 {
-	if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
+if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 {
 int r = va_arg(g, int);
 char buffer[12];
