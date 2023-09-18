@@ -2,6 +2,7 @@
 #define MAIN_H
 
 int _printf(const char *format, ...);
+
 void printChar(char c, int *as);
 
 void printString(const char *str, int *as);
