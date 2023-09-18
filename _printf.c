@@ -47,6 +47,7 @@ as = as + 6;
 }
 format = format + 2;
 }
+<<<<<<< HEAD
 else if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 {
 int r = va_arg(g, int);
@@ -56,6 +57,8 @@ write(1, buffer, i);
 as = as + i;
 format = format + 2;
 }
+=======
+>>>>>>> eee0e2f5625479c46bc053aa4b981817e0f82c66
 else if (*format == '%' && (*(format + 1) == 'u' ||
 *(format + 1) == 'o' || *(format + 1) == 'x' || *(format + 1) == 'X'))
 {
