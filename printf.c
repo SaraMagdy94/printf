@@ -72,3 +72,7 @@ printChar(*format++, &as);
 va_end(g);
 return (as);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9cce083f5ed47be51cbb339d651b4a4340ff64a0
