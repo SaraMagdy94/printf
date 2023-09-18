@@ -54,7 +54,8 @@ as = as + 6;
 }
 format = format + 2;
 }
-else if (*format == '%' && (*(format + 1) == 'u' || *(format + 1) == 'o' || *(format + 1) == 'x' || *(format + 1) == 'X'))
+else if (*format == '%' && (*(format + 1) == 'u' ||
+*(format + 1) == 'o' || *(format + 1) == 'x' || *(format + 1) == 'X'))
 {
 unsigned int r = va_arg(g, unsigned int);
 char buffer[32];
