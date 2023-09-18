@@ -1,7 +1,8 @@
 #include <unistd.h>
+#include "main.h"
 #include <stdarg.h>
 #include <stdio.h>
-#include "main.h"
+#include <string.h>
 
 /**
  * _printf - printf function
@@ -17,7 +18,16 @@ va_start(g, format);
 
 while (*format)
 {
-if (*format == '%' && (*(format + 1) == 'c' || *(format + 1) == 's'))
+if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
+{
+int r = va_arg(g, int);
+char buffer[12];
+int i = sprintf(buffer, "%d", r);
+write(1, buffer, i);
+as = as + i;
+format = format + 2;
+}
+else if (*format == '%' && (*(format + 1) == 'c' || *(format + 1) == 's'))
 {
 if (*(format + 1) == 'c')
 {
