@@ -2,11 +2,16 @@
 #define MAIN_H
 
 int _printf(const char *format, ...);
-<<<<<<< HEAD
-int mprintf(const char *format, ...);
-void print_binary(unsigned int num);
-=======
 
->>>>>>> eee0e2f5625479c46bc053aa4b981817e0f82c66
+void printChar(char c, int *as);
+
+void printString(const char *str, int *as);
+
+void printInteger(int num, int *as);
+
+void printUnsigned(unsigned int num, int *as);
+
+void printPointer(void *ptr, int *as);
+
 #endif /* MAIN_H */
 

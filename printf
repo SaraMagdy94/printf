@@ -3,7 +3,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-
 /**
  * _printf - printf function
  * @format: Format string
@@ -16,7 +15,6 @@ char buffer[1024];
 int as = 0;
 va_list g;
 va_start(g, format);
-
 while (*format)
 {
 if (*format == '%' && (*(format + 1) == 'c' || *(format + 1) == 's'))
@@ -47,7 +45,6 @@ as = as + 6;
 }
 format = format + 2;
 }
-<<<<<<< HEAD
 else if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 {
 int r = va_arg(g, int);
@@ -57,15 +54,12 @@ write(1, buffer, i);
 as = as + i;
 format = format + 2;
 }
-=======
->>>>>>> eee0e2f5625479c46bc053aa4b981817e0f82c66
 else if (*format == '%' && (*(format + 1) == 'u' ||
 *(format + 1) == 'o' || *(format + 1) == 'x' || *(format + 1) == 'X'))
 {
 unsigned int r = va_arg(g, unsigned int);
 char buffer[32];
 int i = 0;
-
 if (*(format + 1) == 'u')
 i = sprintf(buffer, "%u", r);
 else if (*(format + 1) == 'o')
@@ -74,22 +68,16 @@ else if (*(format + 1) == 'x')
 i = sprintf(buffer, "%x", r);
 else if (*(format + 1) == 'X')
 i = sprintf(buffer, "%X", r);
-
 write(1, buffer, i);
-as =  as + i;
-format = format + 2;
-}
-else if (*format == '%' && (*(format + 1) == '%' || *(format + 1) == '\0'))
-{
-buffer[0] = '%';
-write(1, buffer, 1);
-as++;
+as = as + i;
 format = format + 2;
 }
 else
 {
-buffer[0] = *format++;
-write(1, buffer, 1);as++;
+buffer[0] = *format;
+write(1, buffer, 1);
+as++;
+format++;
 }
 }
 va_end(g);
