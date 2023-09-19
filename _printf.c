@@ -12,7 +12,6 @@
  */
 int _printf(const char *format, ...)
 {
-char buffer[1024];
 int as = 0;
 va_list g;
 va_start(g, format);
