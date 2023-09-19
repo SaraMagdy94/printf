@@ -23,7 +23,7 @@ if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 {
 int r = va_arg(g, int);
 char buffer[12];
-int i = sprintf(buffer, "%+d", r);
+int i = sprintf(buffer, "%d", r);
 write(1, buffer, i);
 as = as + i;
 format = format + 2;
@@ -63,13 +63,13 @@ char buffer[32];
 int i = 0;
 
 if (*(format + 1) == 'u')
-i = sprintf(buffer, "%+u", r);
+i = sprintf(buffer, "%u", r);
 else if (*(format + 1) == 'o')
 i = sprintf(buffer, "%o", r);
 else if (*(format + 1) == 'x')
-i = sprintf(buffer, "%#x", r);
+i = sprintf(buffer, "%x", r);
 else if (*(format + 1) == 'X')
-i = sprintf(buffer, "%#X", r);
+i = sprintf(buffer, "%X", r);
 
 write(1, buffer, i);
 as =  as + i;
