@@ -21,9 +21,40 @@ while (*format)
 {
 if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 {
+
 int r = va_arg(g, int);
 char buffer[12];
-int i = sprintf(buffer, "%d", r);
+int i;
+int j;
+int neg;
+
+i = 0;
+neg = 0;
+
+if (r < 0) {
+neg = 1;
+r = -r;
+}
+
+do
+{
+buffer[i++] = (char)(r % 10 + '0');
+r /= 10;
+}
+while (r);
+
+if (neg)
+{
+buffer[i++] = '-';
+}
+
+for (j = 0; j < i / 2; j++)
+{
+char tmp = buffer[j];
+buffer[j] = buffer[i - j - 1];
+buffer[i - j - 1] = tmp;
+}
+
 write(1, buffer, i);
 as = as + i;
 format = format + 2;
@@ -92,7 +123,7 @@ if (*(format) == 'd' || *(format) == 'i')
 	else if (flag == ' ')
 		i = sprintf(buffer, "% d", r);
 	else if (flag == '#')
-		i = sprintf(buffer, "%#d", r);
+		i = sprintf(buffer, "%d", r);
 	else
 		i = sprintf(buffer, "%d", r);
 
@@ -117,6 +148,33 @@ write(1, "%", 1);
 as++;
 format = format + 2;
 }
+else if (*format == '%' && *(format + 1) == 'b')
+{
+unsigned int r = va_arg(g, unsigned int);
+char binary[33];
+int i;
+
+binary[32] = '\0';
+i = 31;
+
+while (i >= 0)
+{
+binary[i] = (r & 1) ? '1' : '0';
+r >>= 1;
+i--;
+}
+
+i = 0;
+while (binary[i] == '0' && i < 32)
+{
+i++;
+}
+
+write(1, binary + i, 32 - i);
+as = as + 32 - i;
+format = format + 2;
+}
+
 else
 {
 write(1, format++, 1);
