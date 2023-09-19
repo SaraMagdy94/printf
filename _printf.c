@@ -31,17 +31,16 @@ int neg;
 i = 0;
 neg = 0;
 
-if (r < 0) {
+if (r < 0)
+{
 neg = 1;
 r = -r;
 }
 
-do
-{
+do {
 buffer[i++] = (char)(r % 10 + '0');
 r /= 10;
-}
-while (r);
+} while (r);
 
 if (neg)
 {
@@ -106,7 +105,8 @@ write(1, buffer, i);
 as =  as + i;
 format = format + 2;
 }
-else if (*format == '%' && (*(format + 1) == '+' || *(format + 1) == ' ' || *(format + 1) == '#'))
+else if (*format == '%' && (*(format + 1) == '+' ||
+*(format + 1) == ' ' || *(format + 1) == '#'))
 {
 char flag = *(format + 1);
 
