@@ -137,14 +137,14 @@ if (*(format) == 'd' || *(format) == 'i')
 else if (*format == '%' && *(format + 1) == 'p')
 {
 void *p = va_arg(g, void *);
-unsigned long long ad = (unsigned long long)p;
-char buffer[16];
-int i, j;
+unsigned long ad = (unsigned long)p;
+char hex[17] = "0123456789ABCDEF";
+int i;
+int j;
 i = 0;
-const char *d = "0123456789ABCDEF";
 
 do {
-buffer[i++] = d[ad % 16];
+buffer[i++] = hex[ad % 16];
 ad /= 16;
 } while (ad);
 
