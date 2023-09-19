@@ -28,7 +28,7 @@ write(1, buffer, i);
 as = as + i;
 format = format + 2;
 }
-if (*format == '%' && (*(format + 1) == 'c' || *(format + 1) == 's'))
+else if (*format == '%' && (*(format + 1) == 'c' || *(format + 1) == 's'))
 {
 if (*(format + 1) == 'c')
 {
