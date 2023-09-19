@@ -77,7 +77,28 @@ format = format + 2;
 }
 else if (*format == '%' && (*(format + 1) == '+' || *(format + 1) == ' ' || *(format + 1) == '#'))
 {
-format = format + 2;
+char flag = *(format + 1);
+
+format += 2;
+
+if (*(format) == 'd' || *(format) == 'i')
+{
+	int r = va_arg(g, int);
+	char buffer[12];
+	int i;
+
+	if (flag == '+')
+		i = sprintf(buffer, "%+d", r);
+	else if (flag == ' ')
+		i = sprintf(buffer, "% d", r);
+	else if (flag == '#')
+		i = sprintf(buffer, "%#d", r);
+	else
+		i = sprintf(buffer, "%d", r);
+
+	write(1, buffer, i);
+	as += i;
+}
 }
 else if (*format == '%' && *(format + 1) == 'p')
 {
