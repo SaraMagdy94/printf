@@ -13,12 +13,18 @@
 int _printf(const char *format, ...)
 {
 char buffer[1024];
+char flag = '\0';
 int as = 0;
 va_list g;
 va_start(g, format);
 
 while (*format)
 {
+if (*format == '%' && (*(format + 1) == '+' || *(format + 1) == ' ' || *(format + 1) == '#'))
+{
+flag = *(format + 1);
+format = format + 2;
+}
 if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 {
 int r = va_arg(g, int);
@@ -96,6 +102,10 @@ else
 {
 write(1, format++, 1);
 as++;
+}
+if (flag != '\0')
+{
+flag = '\0';
 }
 }
 va_end(g);
