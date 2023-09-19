@@ -136,14 +136,27 @@ if (*(format) == 'd' || *(format) == 'i')
 }
 else if (*format == '%' && *(format + 1) == 'p')
 {
-	void *p = va_arg(g, void *);
-	int l;
+void *p = va_arg(g, void *);
+unsigned long long ad = (unsigned long long)p;
+char buffer[16];
+int i, j;
+i = 0;
+const char *d = "0123456789ABCDEF";
 
-	sprintf(buffer, "%p", p);
-	l = strlen(buffer);
-	write(1, buffer, l);
-	as = as + l;
-	format = format + 2;
+do {
+buffer[i++] = d[ad % 16];
+ad /= 16;
+} while (ad);
+
+buffer[i++] = 'x';
+buffer[i++] = '0';
+
+for (j = i - 1; j >= 0; j--) {
+write(1, &buffer[j], 1);
+}
+
+as = as + i;
+format = format + 2;
 }
 else if (*format == '%' && (*(format + 1) == '%' || *(format + 1) == '\0'))
 {
