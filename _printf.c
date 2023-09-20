@@ -199,7 +199,30 @@ write(1, binary + i, 32 - i);
 as = as + 32 - i;
 format = format + 2;
 }
-
+else if (*format == '%' && *(format + 1) == 'S')
+{
+char *sr = va_arg(g, char *);
+while (*sr)
+{
+if (*sr < 32 || *sr >= 127)
+{
+char hex[4];
+hex[0] = '\\';
+hex[1] = 'x';
+hex[2] = "0123456789ABCDEF"[(*sr >> 4) & 0xF];
+hex[3] = "0123456789ABCDEF"[*sr & 0xF];
+write(1, hex, 4);
+as = as + 4;
+}
+else
+{
+write(1, sr, 1);
+as++;
+}
+sr++;
+}
+format = format + 2;
+}
 else
 {
 write(1, format++, 1);
