@@ -24,42 +24,64 @@ while (*format)
 {
 if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 {
+    int r = va_arg(g, int);
+    char buffer[12];
+    int i, j, neg, sig;
+    i = 0;
+    neg = 0;
+    sig = 0;
 
-int r = va_arg(g, int);
-char buffer[12];
-int i;
-int j;
-int neg;
+    if (format[1] == '+')
+    {
+        sig = 1;
+        format++;
+    }
+    else if (format[1] == ' ')
+    {
+        sig = 2;
+        format++;
+    }
+    else if (format[1] == '#')
+    {
 
-i = 0;
-neg = 0;
+        format++;
+    }
 
-if (r < 0)
-{
-neg = 1;
-r = -r;
-}
+    if (r < 0)
+    {
+        neg = 1;
+        r = -r;
+    }
 
-do {
-buffer[i++] = (char)(r % 10 + '0');
-r /= 10;
-} while (r);
+    do
+    {
+        buffer[i++] = (char)(r % 10 + '0');
+        r /= 10;
+    } while (r);
 
-if (neg)
-{
-buffer[i++] = '-';
-}
+    if (neg)
+    {
+        buffer[i++] = '-';
+    }
+    else if (sig == 1)
+    {
+        buffer[i++] = '+';
+    }
+    else if (sig == 2)
+    {
+        buffer[i++] = ' ';
+    }
 
-for (j = 0; j < i / 2; j++)
-{
-char tmp = buffer[j];
-buffer[j] = buffer[i - j - 1];
-buffer[i - j - 1] = tmp;
-}
+    for (j = 0; j < i / 2; j++)
+    {
+        char tmp = buffer[j];
+        buffer[j] = buffer[i - j - 1];
+        buffer[i - j - 1] = tmp;
+    }
 
-write(1, buffer, i);
-as = as + i;
-format = format + 2;
+    write(1, buffer, i);
+    as = as + i;
+    format = format + 2;
 }
 else if (*format == '%' && (*(format + 1) == 'c' || *(format + 1) == 's'))
 {
